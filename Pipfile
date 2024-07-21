@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+beautifulsoup4 = "*"
+xlsxwriter = "*"
+tiktoken = "*"
+openai = "*"
+python-dotenv = "*"
+icecream = "*"
+mecab-python3 = "*"
+openpyxl = "*"
+anthropic = "*"
+langchain-anthropic = "*"
+langchain-openai = "*"
+nltk = "*"
+spacy = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
