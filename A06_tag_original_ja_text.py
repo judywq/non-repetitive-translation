@@ -25,25 +25,33 @@ def tag_original_ja_text():
             # continue
         try:
             ja_tagged = row["tagged"]
+            is_tagged = row["is_tagged"]
             raw_translation = row["raw_translation"]
             proof_reading = row["proof_reading"]
-            # print(f"Processing row [{index+1}/{len(df_in)}]: {ja_tagged[:50]}...")
-            final_translation = merge_proof_reading_result(raw_translation, proof_reading)
-            en_targets = final_translation["targets"]
-            ja_tagged_updated = tag_back_ja(ja_tagged, en_targets)
-            ja_tagged_updated = remove_double_quotes_in_target(ja_tagged_updated)
-            ja_tagged_updated = convert_slash_to_backslash(ja_tagged_updated)
             
-            print(ja_tagged_updated)
-            
+            if is_tagged:
+                # print(f"Processing row [{index+1}/{len(df_in)}]: {ja_tagged[:50]}...")
+                final_translation = merge_proof_reading_result(raw_translation, proof_reading)
+                en_targets = final_translation["targets"]
+                ja_tagged_updated = tag_back_ja(ja_tagged, en_targets)
+                ja_tagged_updated = remove_double_quotes_in_target(ja_tagged_updated)
+                ja_tagged_updated = convert_slash_to_backslash(ja_tagged_updated)
+
+                en_translation = final_translation["en_translation"]
+            else:
+                ja_tagged_updated = ja_tagged
+                en_translation = raw_translation
+
             ja_tag_lines.append(ja_tagged_updated)
-            en_raw_lines.append(final_translation["en_translation"])
-            
+            en_raw_lines.append(en_translation)
+
         except Exception as e:
             print(f"Error processing row {index}: {e}")
 
     write_text_file("\n".join(ja_tag_lines), ja_output_file)
     write_text_file("\n".join(en_raw_lines), en_output_file)
+    # print(len(ja_tag_lines))
+    # print(len(en_raw_lines))
     print("Done!")
 
 def remove_double_quotes_in_target(text):
@@ -69,10 +77,13 @@ def tag_back_ja(ja_tagged, en_targets):
     ja_targets = ja_soup.find_all("target")
 
     target_groups = defaultdict(list)
+    first_non_f_type = None
     for target in en_targets:
         if target["type"] == "c":
             # Ignore consistent (c) type targets
             continue
+        if target["type"] == "f" and not first_non_f_type:
+            first_non_f_type = target["type"]
         target_groups[target["id"]].append(target)
     
     tmp = defaultdict(dict)
@@ -82,8 +93,8 @@ def tag_back_ja(ja_tagged, en_targets):
             continue
         for i, target in enumerate(targets):
             if target["type"] == "f":
-                # set the type of first_occurence (f) the same as the next one
-                target["type"] = targets[i+1]["type"]
+                # set the type of first_occurence (f) to the first non f type
+                target["type"] = first_non_f_type
             tmp[target["id"]][target["ref"]] = target
     
     for ja_target in ja_targets:
