@@ -16,8 +16,7 @@ openpyxl = "*"
 anthropic = "*"
 langchain-anthropic = "*"
 langchain-openai = "*"
-nltk = "*"
-spacy = "*"
+
 
 [dev-packages]
 

@@ -1,5 +1,7 @@
 .env
 
+.venv
+
 # Python
 __pycache__/
 data/output/
