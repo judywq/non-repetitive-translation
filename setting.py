@@ -188,7 +188,7 @@ The requirements this task include the following:
 • Maintaining the balance between translation quality and controlling the output: The translation quality can be degraded when the non-repetitive style is inappropriately enforced.
 • Avoiding bias toward high-frequency bilingual word pairs: use strategies such as contexualized non-literal translation.
 • Predicting which words can be reduced or substituted appropriately depending on the context within the sentence.
-• Do not assume the gender of anonymous persons such as "〇〇〇〇氏". Translate them as "Mr./Ms. 〇〇〇〇"
+• Do not assume the gender of anonymous persons such as "〇〇〇〇氏". Translate them as "〇〇〇〇"
 • If at the beginning of the sentence, there is a header showing the location of the news, the date and the branch of the Jiji press, such as "ソウル、1月24日（時事通信）--" or "ソウル、1月24日（ソウル時事）--", there is no need to reduce redundancy for the country name/location in the header or in the Japanese sentence.
 
 ### INPUT and OUTPUT
@@ -445,5 +445,6 @@ Output:
 
 system_message_translate_non_tagged = """You are a professional Japanese-English translation proofreader in the field of news articles. 
 Please translate the given Japanese sentence into English.
-Do not assume the gender of anonymous persons such as "〇〇〇〇氏". Translate them as "Mr./Ms. 〇〇〇〇"
+Return your translation only and NOTHING ELSE.
+Do not assume the gender of anonymous persons such as "〇〇〇〇氏". Translate them as "〇〇〇〇"
 """
