@@ -52,7 +52,7 @@ def _translate(input_file, output_file, input_col='input', output_col='raw_trans
             ja_text = row[input_col]
             is_tagged = check_tag(ja_text)
             user_message = ja_text
-            print(f"Processing row [{index+1}/{len(df_in)}]: {user_message[:50]}...")
+            print(f"Translating row [{index+1}/{len(df_in)}]: {user_message[:50]}...")
             if is_tagged:
                 response = run_model(use_model, system_message_tagged, user_message, temperature)
             else:
@@ -69,7 +69,7 @@ def _translate(input_file, output_file, input_col='input', output_col='raw_trans
         except Exception as e:
             print(f"Error processing row {index}: {e}")
 
-        if index % 60 == 0:
+        if (index + 1) % 60 == 0:
             sleep(10)
 
     write_data(df_in, output_file)

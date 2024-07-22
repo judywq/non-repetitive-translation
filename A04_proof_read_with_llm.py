@@ -59,7 +59,7 @@ def proof_read_files():
             is_tagged = row["is_tagged"]
             # HACK: use the df_src instead
             # raw_translation = df_src.at[index, "raw_translation"]
-            print(f"Processing row [{index+1}/{len(df_in)}]: {ja_text[:50]}...")
+            print(f"Proof reading row [{index+1}/{len(df_in)}]: {ja_text[:50]}...")
             
             if not is_tagged:
                 df_in.at[index, f"proof_reading"] = raw_translation
@@ -83,7 +83,7 @@ def proof_read_files():
         except Exception as e:
             print(f"Error processing row {index}: {e}")
 
-        if index % 60 == 0:
+        if (index + 1) % 60 == 0:
             sleep(10)
 
     write_data(df_in, output_file)

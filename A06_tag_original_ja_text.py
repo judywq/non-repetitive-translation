@@ -50,9 +50,9 @@ def tag_original_ja_text():
 
     write_text_file("\n".join(ja_tag_lines), ja_output_file)
     write_text_file("\n".join(en_raw_lines), en_output_file)
-    # print(len(ja_tag_lines))
-    # print(len(en_raw_lines))
     print("Done!")
+    print(f"Japanese tagged file saved to: {ja_output_file}")
+    print(f"English translation file saved to: {en_output_file}")
 
 def remove_double_quotes_in_target(text):
     # Define a regular expression pattern to find <target> content

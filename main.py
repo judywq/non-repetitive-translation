@@ -12,8 +12,8 @@ def main():
     translate_files()
     proof_read_files()
     tag_translated_files()
-    tag_original_ja_text()
     parse_generated_ja_en_pairs()
+    tag_original_ja_text()
 
 
 if __name__ == "__main__":
